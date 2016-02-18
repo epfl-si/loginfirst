@@ -8,6 +8,7 @@ called.
 
 If you would like to enforce that your application not work at all for
 not logged-in users, proceed as follows:
+
 1. `meteor add loginfirst`
 2. Whitelist the method names that are not delayed, e.g.
    <pre>LoginFirst.allowedMethodNames = ["<a href="https://github.com/epfl-sti/accounts-tequila">tequila.authenticate</a>"];</pre>
@@ -21,8 +22,8 @@ Some care must be taken to write the client properly, because the
 failure mode is not fatal. Specifically:
 * while it doesn't have to be the very first thing it does, the client
   would be well-advised to log in at `Meteor.startup()` time;
-* and it better deal properly with failures in the authentication method call (if that
-  is what it uses).
+* and it better deal properly with failures in the authentication method (if it
+  calls one).
 
 Failure to follow this advice will cause the client to stay catatonic
 (search boxes, buttons etc have no effect) for no obvious reason (to
