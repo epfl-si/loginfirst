@@ -1,0 +1,3 @@
+LoginFirst = {
+  allowedMethodNames: []
+};
