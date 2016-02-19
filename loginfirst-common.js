@@ -1,3 +1,3 @@
 LoginFirst = {
-  allowedMethodNames: []
+  allowedMethodNames: ["login"]
 };
