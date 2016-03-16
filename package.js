@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
   api.use('ecmascript');
   api.use('underscore');
-  api.use('meteorhacks:meteorx', ['server']);
+  api.use('meteorhacks:meteorx@1.0.2', ['server']);
   api.addFiles('loginfirst-common.js');
   api.addFiles('loginfirst-server.js', ['server']);
   api.export("LoginFirst");
