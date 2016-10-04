@@ -1,5 +1,4 @@
 var Fiber = Npm.require("fibers"),
-    WeakMap = Npm.require("weak-map"),   // https://github.com/meteor/meteor/issues/5124
     _debug = Npm.require("debug")("loginfirst");
 
 function debug(session/*, args */) {
