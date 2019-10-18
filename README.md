@@ -18,7 +18,12 @@ not logged-in users, proceed as follows:
 3. ???
 4. Profit!
 
-(Step 3 probably involves, you know, working on your project)
+(Step 3 probably involves, you know, putting some work into your
+project — which ought to be easier now that your boss isn't pestering
+you anymore about that flash of “sensitive” subscription data being
+shown to unauthorized users, which probably includes himself at this
+stage of the project, right behind that `alert()` box that tells him
+to go pound sand)
 
 # How It Works
 
