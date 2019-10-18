@@ -1,3 +1,0 @@
-LoginFirst = {
-  allowedMethodNames: ["login"]
-};
