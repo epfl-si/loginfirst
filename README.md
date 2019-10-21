@@ -11,7 +11,7 @@ not logged-in users, proceed as follows:
 
 1. `meteor add epfl:loginfirst`
 2. Whitelist the method names that are not delayed, e.g.
-   <pre>import LoginFirst from 'meteor/loginfirst'
+   <pre>import LoginFirst from 'meteor/epfl:loginfirst'
    LoginFirst.whitelist.methods.append("myInnocuousMethodThatIsSoImportantThatItCannotWaitForTheUserToLogInFirst")
    LoginFirst.whitelist.subscriptions.append("dittoForSubscription")
    </pre>
