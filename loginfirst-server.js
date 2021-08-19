@@ -37,6 +37,9 @@ _.extend(MeteorX.Session.prototype.protocol_handlers, {
            _.contains(LoginFirst.whitelist.methods, msg.method))) {
       debug(`method(${msg.method}): blocked, please login first`)
       this.send({
+        msg: 'updated', methods: [msg.id]
+      })
+      this.send({
           msg: 'result', id: msg.id,
           error: new Meteor.Error(403, 'loginfirst:pleaseLoginFirst')
       })
