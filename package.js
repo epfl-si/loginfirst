@@ -6,7 +6,7 @@ Package.describe({
   documentation: 'README.md'
 })
 
-Package.onUse(function(api) {
+Package.onUse((api) => {
   api.versionsFrom(['METEOR@1.8.1', 'METEOR@2.3.2']);
   api.use('modules')
   api.use('ecmascript')
