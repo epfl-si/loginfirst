@@ -10,7 +10,7 @@ If you would like to enforce that your application not work at all for
 not logged-in users, proceed as follows:
 
 1. `meteor add epfl:loginfirst`
-2. Whitelist the method names that are not delayed, e.g.
+2. (optional) Whitelist any Meteor methods and subscriptions that should not be delayed, e.g.
    <pre>import LoginFirst from 'meteor/epfl:loginfirst'
    LoginFirst.whitelist.methods.append("myInnocuousMethodThatIsSoImportantThatItCannotWaitForTheUserToLogInFirst")
    LoginFirst.whitelist.subscriptions.append("dittoForSubscription")
@@ -22,23 +22,22 @@ not logged-in users, proceed as follows:
 
 # How It Works
 
-The seerver rejects any and all method and subscription calls that are
-not whitelisted are rejected immediately (i.e. no server-side [DDP
-message
+The server rejects any and all method calls and subscription requests
+(unless whitelisted), and rejects them promptly (i.e. no server-side
+[DDP message
 reordering](https://docs.meteor.com/api/methods.html#DDPCommon-MethodInvocation-unblock)
 takes place), unless and until the user is logged in.
 
 As far as subscriptions are concerned, the Meteor client-side runtime
 does subscribe to a handful of them automagically as soon as the app
-starts, and some of your app's widgets probably also do. All of these
+starts, and some of your app's widgets might do same. All of these
 subscriptions will get a `nosub` DDP response before login completes —
-Which this is harmless, because client-side Meteor already knows to
-retry all subscriptions whenever it sees `Meteor.userId` changing (and
-that piece of information is sent over DDP *without* clients having to
+Which is harmless, because client-side Meteor already knows to retry
+all subscriptions whenever it sees `Meteor.userId` changing (and that
+piece of information is sent over DDP *without* clients having to
 subscribe to it). Also, the `meteor.loginServiceConfiguration`
-subscription is whitelisted, which leavs your app free to display a
-login prompt as usual, and then call the `login` method.
+subscription is whitelisted by defaults, which allows your app to
+display a login prompt as usual, prior to calling the `login` method.
 
-If you need to call a Meteor method before the standard `login` method
-(which should be fairly unusual), make sure to whitelist it (see
-above).
+If you need to call a DDP *method* before `login` (which should be
+fairly unusual), make sure to whitelist it (see above).
