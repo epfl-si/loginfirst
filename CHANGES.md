@@ -1,3 +1,8 @@
+# Version 0.3.1
+
+- Now with a test suite
+- Yes, it found a bug (and yes, the fix is in this release too): in order to properly reject a method call in the logged-out state, we need to send two DDP messages instead of one
+
 # Version 0.3.0
 
 **Security release**
