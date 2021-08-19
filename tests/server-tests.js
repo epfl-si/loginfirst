@@ -3,7 +3,7 @@ import { strict as assert } from 'assert'
 
 import debug_ from 'debug'
 
-const counter = {
+const counters = {
   login: 0,
   aMethod: 0,
   reset() {
@@ -16,10 +16,12 @@ const serverDebug = debug_('loginfirst:fake-server')
 Meteor.methods({
   login () {
     serverDebug("login")
+    counters.login += 1
     return "loggedin"
   },
 
   aMethod () {
+    counters.aMethod += 1
     serverDebug("aMethod")
   }
 })
@@ -46,6 +48,8 @@ describe("Server-side tests", function() {
 
   let connection
   beforeEach(function() {
+    counters.reset()
+
     connection = DDP.connect(Meteor.absoluteUrl())
     let { call, subscribe } = connection
     for (const method of ["call", "subscribe"]) {
@@ -55,18 +59,19 @@ describe("Server-side tests", function() {
 
   describe("Logged-out state", function() {
     it("lets the client call `login()`", async function() {
-      const result = await connection.call("login")
-      debug(result)
+      await connection.call("login")
+      assert.equal(1, counters.login)
     })
 
     it("lets the client subscribe to `meteor.loginServiceConfiguration`")
     it("blocks other subscriptions")
     it("blocks other methods", async function() {
       try {
-        await connection.call("somethingelse")
+        await connection.call("aMethod")
         assert.fail("Call should have been blocked")
-      } catch (e) {
-        console.error(e)
+      } catch (error) {
+        assert.equal('loginfirst:pleaseLoginFirst', error.reason)
+        assert.equal(0, counters.aMethod)
       }
     })
   })
