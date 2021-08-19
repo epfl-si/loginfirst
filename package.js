@@ -19,11 +19,6 @@ Package.onUse((api) => {
   api.mainModule('loginfirst-server.js', ['server'])
 })
 
-// To run the test suite, you must have `epfl:loginfirst` checked out
-// outside of any Meteor app (*not* in a pacakges/ subdirectory). Run
-//
-//   env DEBUG='loginfirst*' TEST_CLIENT=0 meteor test-packages ./ --driver-package meteortesting:mocha --extra-packages lmieulet:meteor-coverage
-
 Package.onTest((api) => {
   use_runtime_dependencies(api)
   api.use('meteortesting:mocha')

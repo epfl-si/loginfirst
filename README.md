@@ -43,3 +43,10 @@ If you need to call a DDP *method* before `login` (which should be
 fairly unusual), make sure to whitelist it (see above).
 
 ¹ [Covered by a test in `meteor/packages/accounts-base/accounts_reconnect_tests.js`](https://github.com/meteor/meteor/blob/dd13980b938873d3550ab6f92cf26d9d6195b724/packages/accounts-base/accounts_reconnect_tests.js#L98)
+
+# Developer Instructions
+
+## Running the test suite
+
+1. Make sure that you `git clone` this package outside of any Meteor application. <br/>💡 If you insist on wanting a cloned `epfl:loginfirst` in your Meteor application's `packages/` subdirectory, you can use a symlink
+1. Run <pre>env TEST_CLIENT=0 meteor test-packages ./ --driver-package meteortesting:mocha</pre>... which should give you a nice and terse green bar; but in the, hopefully unusual case that it doesn't, use this instead to investigate:<pre>env DEBUG='loginfirst*' TEST_CLIENT=0 meteor test-packages ./ --driver-package meteortesting:mocha</pre>
