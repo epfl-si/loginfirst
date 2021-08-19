@@ -8,6 +8,7 @@ const counters = {
     this.login = 0
     this.aMethod = 0
     this.loginServiceConfiguration = 0
+    this.dailyMail = 0
   }
 }
 counters.reset()
@@ -31,6 +32,12 @@ Meteor.publish({
     counters.loginServiceConfiguration += 1
     this.ready()
     serverDebug("loginServiceConfiguration")
+  },
+
+  dailyMail() {
+    counters.dailyMail += 1
+    this.ready()
+    serverDebug("dailyMail")
   }
 })
 
@@ -87,7 +94,15 @@ describe("Server-side tests", function() {
       assert.equal(1, counters.loginServiceConfiguration)
     })
 
-    it("blocks other subscriptions")
+    it("blocks other subscriptions", async function() {
+      try {
+        await connection.subscribe("dailyMail")
+        assert.fail("Subscription should have been blocked")
+      } catch (error) {
+        assert.equal(0, counters.dailyMail)
+      }
+    })
+
     it("blocks other methods", async function() {
       try {
         await connection.call("aMethod")
