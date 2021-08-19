@@ -81,13 +81,12 @@ function DDPConnectAsyncAPI () {
 describe("Server-side tests", function() {
   const debug = debug_('loginfirst:tests')
 
-  let connection
-  beforeEach(function() {
-    counters.reset()
-    connection = DDPConnectAsyncAPI()
-  })
+  beforeEach(() => counters.reset())
 
   describe("Logged-out state", function() {
+    let connection
+    beforeEach(() => { connection = DDPConnectAsyncAPI() })
+
     it("lets the client call `login()`", async function() {
       await connection.call("login")
       assert.equal(1, counters.login)
