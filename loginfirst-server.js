@@ -28,7 +28,7 @@ _.extend(MeteorX.Session.prototype.protocol_handlers, {
     }
 
     debug(`sub(${msg.name}): : passing to Meteor`)
-    return sub.call(this, msg)
+    sub.call(this, msg)
   },
 
   method (msg, unblock) {
@@ -40,9 +40,11 @@ _.extend(MeteorX.Session.prototype.protocol_handlers, {
           msg: 'result', id: msg.id,
           error: new Meteor.Error(403, 'loginfirst:pleaseLoginFirst')
       })
+
+      return
     }
 
     debug(`method(${msg.method}): passing to Meteor`)
-    return method.call(this, msg, unblock)
+    method.call(this, msg, unblock)
   }
 })
