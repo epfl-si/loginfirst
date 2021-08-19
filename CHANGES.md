@@ -1,3 +1,10 @@
+# Version 0.2.0
+
+Maintenance-only release containing only forward compatibility fixes.
+
+- Support latest Meteor
+- Change meteorx package, following upstream change of maintainership
+
 # Version 0.1.0
 
 Rewritten from scratch, massive code simplification.
