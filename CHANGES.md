@@ -1,3 +1,11 @@
+# Version 0.3.0
+
+**Security release**
+
+Versions prior to this one suffer a fatal (and embarrassing) security
+flaw that doesn't actually block method calls (i.e. writes) prior to
+logging in. Please upgrade as soon as possible.
+
 # Version 0.2.0
 
 Maintenance-only release containing only forward compatibility fixes.
