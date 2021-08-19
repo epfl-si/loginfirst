@@ -1,7 +1,7 @@
 Package.describe({
   name: 'epfl:loginfirst',
   version: '0.2.0',
-  summary: 'Queue all DDP messages until the user has logged in',
+  summary: 'Block all DDP messages until the user has logged in',
   git: 'https://github.com/epfl-idevelop/loginfirst',
   documentation: 'README.md'
 })
