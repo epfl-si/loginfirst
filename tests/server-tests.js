@@ -18,7 +18,7 @@ Meteor.methods({
   login () {
     serverDebug("login")
     counters.login += 1
-    return "loggedin"
+    this.setUserId("john")
   },
 
   aMethod () {
@@ -118,7 +118,20 @@ describe("Server-side tests", function() {
   })
 
   describe("Logged-in state", function() {
-    it("lets the client call any method")
-    it("lets the client subscribe to anything")
+    let connection
+    beforeEach(async () => {
+      connection = DDPConnectAsyncAPI()
+      await connection.call("login")
+    })
+
+    it("lets the client call any method", async function() {
+      await connection.call("aMethod")
+      assert.equal(1, counters.aMethod)
+    })
+
+    it("lets the client subscribe to anything", async function() {
+      await connection.subscribe("dailyMail")
+      assert.equal(1, counters.dailyMail)
+    })
   })
 })
