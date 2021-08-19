@@ -48,3 +48,5 @@ _.extend(MeteorX.Session.prototype.protocol_handlers, {
     method.call(this, msg, unblock)
   }
 })
+
+debug('epfl:loginfirst is active on server')
