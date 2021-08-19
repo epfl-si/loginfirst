@@ -11,7 +11,7 @@ Package.onUse(function(api) {
   api.use('modules')
   api.use('ecmascript')
   api.use('underscore')
-  api.use('lamhieu:meteorx@2.1.1', ['server'])
+  api.use('montiapm:meteorx@2.2.0', ['server'])
   api.mainModule('loginfirst-server.js', ['server'])
 })
 
