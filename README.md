@@ -32,11 +32,12 @@ As far as subscriptions are concerned, the Meteor client-side runtime
 does subscribe to a handful of them automagically as soon as the app
 starts, and some of your app's widgets might do same. All of these
 subscriptions will get a `nosub` DDP response before login completes —
-But that is harmless, because client-side Meteor already knows to retry
-all subscriptions whenever the `login` method succeeds¹. Also, the
-`meteor.loginServiceConfiguration` subscription is whitelisted by
-default, which allows your app to display a login prompt as usual,
-prior to calling the `login` method.
+But that is harmless, because client-side Meteor already knows to
+retry all subscriptions whenever the `login` method succeeds¹. Also,
+the `meteor.loginServiceConfiguration` subscription is whitelisted by
+default, which is enough to let your app display a multi-provider
+login widget (with server-side list of providers) if it was programmed
+to do so prior to enabling `epfl:loginfirst`.
 
 If you need to call a DDP *method* before `login` (which should be
 fairly unusual), make sure to whitelist it (see above).
