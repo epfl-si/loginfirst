@@ -1,6 +1,6 @@
 Ensure that users log in first in a Meteor application.
 
-This works by delaying treatment of incoming DDP messages, until
+This works by blocking client DDP messages (for method calls and subscriptions), until
 [`.setUserId()`](http://docs.meteor.com/#/full/method_setUserId) is
 called.
 
