@@ -71,16 +71,20 @@ function ddp_async (connection, method) {
   }
 }
 
+function DDPConnectAsyncAPI () {
+  const connection = DDP.connect(Meteor.absoluteUrl())
+  connection.call = ddp_async(connection, "call")
+  connection.subscribe = ddp_async(connection, "subscribe")
+  return connection
+}
+
 describe("Server-side tests", function() {
   const debug = debug_('loginfirst:tests')
 
   let connection
   beforeEach(function() {
     counters.reset()
-
-    connection = DDP.connect(Meteor.absoluteUrl())
-    connection.call = ddp_async(connection, "call")
-    connection.subscribe = ddp_async(connection, "subscribe")
+    connection = DDPConnectAsyncAPI()
   })
 
   describe("Logged-out state", function() {
