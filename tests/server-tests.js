@@ -4,13 +4,13 @@ import { strict as assert } from 'assert'
 import debug_ from 'debug'
 
 const counters = {
-  login: 0,
-  aMethod: 0,
   reset() {
     this.login = 0
     this.aMethod = 0
+    this.loginServiceConfiguration = 0
   }
 }
+counters.reset()
 
 const serverDebug = debug_('loginfirst:fake-server')
 Meteor.methods({
@@ -26,19 +26,40 @@ Meteor.methods({
   }
 })
 
-function cb2async (f) {
+Meteor.publish({
+  "meteor.loginServiceConfiguration": function() {
+    counters.loginServiceConfiguration += 1
+    this.ready()
+    serverDebug("loginServiceConfiguration")
+  }
+})
+
+function ddp_async (connection, method) {
+  const f = connection[method]
   return async function (/* ... */) {
     const args = [...arguments]
     return new Promise((resolve, reject) => {
       f.call(this,  // The one from above - We are in arrow function
              ...args,
-             (error, result) => {
-               if (error !== undefined) {
-                 reject(error)
-               } else {
-                 resolve(result)
-               }
-             })
+             (
+               method === "call"
+               ?
+                 (error, result) => {
+                   if (error !== undefined) {
+                     reject(error)
+                   } else {
+                     resolve(result)
+                   }
+                 }
+               :
+
+               method === "subscribe"
+               ?
+               { onStop: reject, onReady: resolve }
+               :
+
+               (() => { throw new Error(`Unknown method ${method}`) })()
+            ))
     })
   }
 }
@@ -51,10 +72,8 @@ describe("Server-side tests", function() {
     counters.reset()
 
     connection = DDP.connect(Meteor.absoluteUrl())
-    let { call, subscribe } = connection
-    for (const method of ["call", "subscribe"]) {
-      connection[method] = cb2async(connection[method].bind(connection))
-    }
+    connection.call = ddp_async(connection, "call")
+    connection.subscribe = ddp_async(connection, "subscribe")
   })
 
   describe("Logged-out state", function() {
@@ -63,7 +82,11 @@ describe("Server-side tests", function() {
       assert.equal(1, counters.login)
     })
 
-    it("lets the client subscribe to `meteor.loginServiceConfiguration`")
+    it("lets the client subscribe to `meteor.loginServiceConfiguration`", async function() {
+      await connection.subscribe('meteor.loginServiceConfiguration')
+      assert.equal(1, counters.loginServiceConfiguration)
+    })
+
     it("blocks other subscriptions")
     it("blocks other methods", async function() {
       try {
