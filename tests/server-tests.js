@@ -1,4 +1,4 @@
-import '../loginfirst-server'
+import LoginFirst from '../loginfirst-server'
 import { strict as assert } from 'assert'
 
 import debug_ from 'debug'
@@ -80,6 +80,13 @@ function DDPConnectAsyncAPI () {
 
 describe("Server-side tests", function() {
   const debug = debug_('loginfirst:tests')
+
+  describe("API", function() {
+    it("exposes `.whitelist.methods` and `.whitelist.subscriptions`", function() {
+      assert(LoginFirst.whitelist.methods)
+      assert(LoginFirst.whitelist.subscriptions)
+    })
+  })
 
   beforeEach(() => counters.reset())
 
