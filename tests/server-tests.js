@@ -61,7 +61,14 @@ describe("Server-side tests", function() {
 
     it("lets the client subscribe to `meteor.loginServiceConfiguration`")
     it("blocks other subscriptions")
-    it("blocks other methods")
+    it("blocks other methods", async function() {
+      try {
+        await connection.call("somethingelse")
+        assert.fail("Call should have been blocked")
+      } catch (e) {
+        console.error(e)
+      }
+    })
   })
 
   describe("Logged-in state", function() {
